@@ -5,6 +5,7 @@ Useful knowledge:
 - https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation-iterators-with-stratification-based-on-class-labels
 - https://www.kaggle.com/migeruj/weather-classification-10-best-ml-classifiers
 - https://ieeexplore.ieee.org/abstract/document/7359273
+- https://towardsdatascience.com/how-to-deal-with-imbalanced-data-in-python-f9b71aba53eb (testing this approach  ~ Witek)
 
 Source of data:
 https://www.kaggle.com/jsphyg/weather-dataset-rattle-package
