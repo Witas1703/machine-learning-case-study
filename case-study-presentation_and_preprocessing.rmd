@@ -1,0 +1,232 @@
+---
+title: "Machine learning case study"
+author: "Anna Przybyłowska, Gurbet Güngören, Wojciech Tomczak, Witold Taisner"
+date: "5/4/2021"
+output:
+  slidy_presentation: 
+    font_adjustment: -0.5
+    theme: sandstone
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(massage = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(tidy = TRUE)
+```
+
+## Description of dataset
+
+source: https://www.kaggle.com/jsphyg/weather-dataset-rattle-package
+
+- This dataset contains information about daily weather observation in Australia over 10 years 
+(2007 - 2017).
+
+- It regards:
+  - date
+  - location
+  - temperature (degrees celsius)
+  - rainfall (mm)
+  - evaporation (mm)
+  - sunshine (hours)
+  - wind direction and speed (km/h)
+  - humidity (percent)
+  - atmospheric pressure (hPa)
+  - fraction of sky obscured by cloud ("oktas")
+  - information if it rained that day (Yes/No, Yes if rain > 1mm)
+  - information if it rained the next day (Ye/No, Yes if rain > 1mm)
+
+- For most of the weather parameters, there is information about measurements at 9am and 3pm, for some maximal/minimal values is also given.
+
+
+## Dataset
+```{r dataset, echo = F, warning = F, message = F, fig.height=7}
+library(tidyr)
+library(ggplot2)
+library(dplyr)
+library(DT)
+
+rain = read.csv("weatherAUS.csv") %>% as_tibble()
+datatable(head(rain, 1000), rownames = F, class = 'cell-border stripe',
+          option = list(
+  scrollX = TRUE,
+  pageLength = 6
+))
+```
+
+
+## Preprocessing
+
+Percentage of missing data
+
+```{r plot1, fig.height=5, fig.width=7, fig.align='center', echo = F}
+counting = rain %>% as_tibble() %>% select(everything()) %>%
+  summarise_all(funs(sum(is.na(.))))
+counting = (counting /145460) 
+counting = counting %>% gather("column", "missing data", 1:23)
+counting = arrange(counting, desc(`missing data`))
+
+ggplot(counting, aes(x = reorder(column, -`missing data`), y = `missing data`)) +
+  geom_bar(stat = "identity") +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 90)) +
+  labs(x = "attributes", y = "missing data [%]") + 
+  theme(text = element_text(size=10))
+```
+
+## Removing missing values and detecting outliers
+
+- We remove all missing values for categorical attributes with string values since by doing that we won't loose too much data.
+
+```{r remove missing values}
+rain = filter(rain, !is.na(rain$RainTomorrow) & !is.na(rain$RainToday) & !is.na(rain$WindGustDir)
+              & !is.na(rain$WindDir9am) & !is.na(rain$WindDir3pm))
+
+```
+
+- For categorical attributes with string values there are no outliers/ incorrect values
+  - It can be easily checked by summarizing the data (count values) or by using WEKA
+- We use outliers detected by boxplot for each column, store them and then replace value of specific parameter with NA
+- Boxplots use interquartile range criterion
+- We will replace missing values with predicted ones
+
+```{r outliers}
+outlier_detection_data = select(rain, -c("RainToday","RainTomorrow","WindGustDir",
+                                         "WindDir9am","WindDir3pm","Date", "Location"))
+
+for(column in colnames(outlier_detection_data)){
+  out = boxplot.stats(outlier_detection_data[[column]])$out
+  out_id = which(rain[[column]] %in% c(out))
+  for(id in out_id){
+    rain[[column]][id] = NA
+  }
+}
+```
+
+## Correctness of data
+
+- Some attributes must have values in specific ranges\
+\
+  - Clouds in [0,8]\
+  \
+  - Humidity in [0,100]\
+  \
+  - Sunshine in [0,24]\
+  \
+  - Rainfall, evaporation, wind speed, pressure ≥ 0\
+  \
+- Outlier test may have not detected them\
+
+## Correctness of data - table
+
+```{r table_ranges, echo = F}
+tmp = do.call(
+  rbind, lapply(
+    select(rain, c("Cloud9am","Cloud3pm","Humidity9am", "Humidity3pm",
+                       "Sunshine", "Rainfall", "Evaporation", "WindGustSpeed",
+                       "WindSpeed9am", "WindSpeed3pm", "Pressure3pm", "Pressure9am")),
+    summary
+  )
+)
+tmp = data.frame(tmp)
+tmp = tmp[-c(2:5,7)]
+datatable(tmp, rownames = T, class = 'cell-border stripe',
+  option = list(
+  scrollX = TRUE,
+  pageLength = 6
+))
+
+```
+
+- We can see some incorrect values in clouds attribute, therefore we set those values to NA.
+```{r outliers2}
+rain$Cloud9am[!(rain$Cloud9am>=0 & rain$Cloud9am<=8)] = NA
+rain$Cloud3pm[!(rain$Cloud3pm>=0 & rain$Cloud3pm<=8)] = NA
+
+```
+
+## Percentage of missing data
+
+We visualize missing data one more time, after detecting outliers, checking for correctness and removing NA values for categorical attributes with string values.  
+
+```{r plot2, echo = F, fig.height=5, fig.width=7, fig.align='center'}
+counting = rain %>% as_tibble() %>% select(everything()) %>%
+  summarise_all(funs(sum(is.na(.))))
+counting = (counting /123710) 
+counting = counting %>% gather("column", "missing data", 1:23)
+counting = arrange(counting, desc(`missing data`))
+
+ggplot(counting, aes(x = reorder(column, -`missing data`), y = `missing data`)) +
+  geom_bar(stat = "identity") + 
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 90)) +
+  labs(x = "attributes", y = "missing data [%]") +
+  theme(text = element_text(size=10))
+```
+
+## Dealing with NA's: round two
+
+- we would loose too much data if we just dropped all missing values (more than a half)
+- no need to drop the variables (usually one should drop the attribute when there are 60-70% of missing values)
+- MICE library
+- multiple imputation with predictive mean matching
+```{r mice, warning = F, message=F, results = 'hide'}
+library(mice)
+imp =  mice(rain, meth='pmm', seed=123)
+rain = complete(imp)
+```
+```{r mice2, echo = F}
+datatable(head(rain, 1000), rownames = F, class = 'cell-border stripe',
+          option = list(
+  scrollX = TRUE,
+  pageLength = 3
+))
+```
+
+
+
+## Other preprocessing
+
+- We remove location column since we want to predict if it rains tomorrow regardless of the location (apart from it's Australia)
+- We transform date to season\
+
+``` {r otherPreprocessing, echo = F}
+rain = select(rain, -Location)
+rain = rain %>% mutate(Season = case_when(
+  substring(Date,6,7) %in% c("12","01","02") ~ "Summer",
+  substring(Date,6,7) %in% c("03","04","05") ~ "Autumn",
+  substring(Date,6,7) %in% c("06","07","08") ~ "Winter",
+  substring(Date,6,7) %in% c("09","10","11") ~ "Spring"
+)) %>% relocate(Season)
+rain = select(rain, -Date)
+datatable(head(rain, 1000), rownames = F, class = 'cell-border stripe',
+          option = list(
+  scrollX = TRUE,
+  pageLength = 6
+))
+write.csv(rain, file = "rain.csv", row.names = FALSE)
+``` 
+
+## Correlation matrix
+
+```{r correlation_matrix, echo = F, fig.align='center', fig.height=7, fig.width=5}
+library(ggcorrplot)
+rain.data = select(rain, -c("RainToday","RainTomorrow","WindGustDir",
+                            "WindDir9am","WindDir3pm","Season"))
+rain.cor = cor(rain.data)
+ggcorrplot(rain.cor,
+           ggtheme = ggplot2::theme_minimal,
+           tl.cex = 10,
+           tl.srt = 90,
+           colors = c("#6D9EC1", "white", "#E46726"))
+
+```
+```{r}
+library(ggplot2)
+ggplot(rain, aes(y = Humidity3pm, x = RainTomorrow , fill = RainTomorrow)) + 
+  geom_violin() + 
+  theme_bw()
+
+```
+
+
