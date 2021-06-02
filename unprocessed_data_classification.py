@@ -8,6 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler, RobustScaler
 from sklearn import metrics
+from sklearn.preprocessing import LabelEncoder
 
 from sklearn.neural_network import MLPClassifier
 from sklearn.neighbors import KNeighborsClassifier
@@ -16,6 +17,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
+from sklearn.linear_model import LogisticRegression
 
 from sklearn.feature_selection import VarianceThreshold, SelectKBest, chi2, f_classif
 
@@ -32,18 +34,19 @@ df.RainTomorrow.replace(("Yes", "No"), (1,0), inplace = True)
 
 df.dropna(inplace = True)
 
-# print(df.shape)
+le = LabelEncoder()
 
+df["Location"] = le.fit_transform(df["Location"])
+df["WindDir9am"]= le.fit_transform(df["WindDir9am"])
+df["WindDir3pm"]= le.fit_transform(df["WindDir3pm"])
+df["WindGustDir"] = le.fit_transform(df["WindGustDir"])
 # columns to be changed to one-hot encoding
-categorical_columns = ["WindGustDir", "WindDir9am", "WindDir3pm", "Location"]
+# categorical_columns = ["WindGustDir", "WindDir9am", "WindDir3pm", "Location"]
 
 # creating one-hot encoding
-df = pd.get_dummies(df, columns = categorical_columns)
-
-# print(df.head())
-
-# print(df.describe())
-
+# df = pd.get_dummies(df, columns = categorical_columns)
+print(df.head())
+print(df.info())
 print(df['RainTomorrow'].sum()/len(df))
 
 y = df.RainTomorrow.to_numpy()
@@ -54,8 +57,8 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random
 pipe = Pipeline(
     [
         ('scaler', StandardScaler()),
-        ('feature_selection', SelectKBest(f_classif, k = 20)) ,
-        ('classifier', SVC())
+        # ('feature_selection', SelectKBest(f_classif, k = 20)) ,
+        ('classifier', RandomForestClassifier())
     ], 
     verbose=True
     ) 
@@ -70,6 +73,4 @@ report = metrics.classification_report(y_test, y_predicted)
 print(report)
 print("Accuracy of the model is:",metrics.accuracy_score(y_test,y_predicted)*100,"%")
 cm = metrics.confusion_matrix(y_test, y_predicted)
-sns.heatmap(cm, annot=True,cmap="YlGnBu")
-plt.title("Confusion Matrix for model")
-plt.show()
+print(cm)
