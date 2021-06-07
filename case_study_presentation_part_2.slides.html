@@ -15061,7 +15061,8 @@ Colunms:70
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/weatherAUS_original_data.csv&quot;</span><span class="p">)</span>
-<span class="n">df2</span> <span class="o">=</span> <span class="n">df2</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;Date&quot;</span><span class="p">,</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">df2</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">df2</span><span class="o">.</span><span class="n">index</span><span class="p">[(</span><span class="n">df2</span><span class="p">[</span><span class="s1">&#39;Cloud3pm&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s1">&#39;Cloud9am&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">8</span><span class="p">)],</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">df2</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;Date&quot;</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 <span class="n">df2</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 
 <span class="c1"># encoding RainTomorrow and RainToday as binary values</span>
@@ -15100,7 +15101,7 @@ Colunms:70
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>Dataset dimensions:
-Rows:56420
+Rows:56419
 Colunms:22
 </pre>
 </div>
@@ -15361,8 +15362,8 @@ Colunms:22
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.1s
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   1.1s
-Total time: 1.2590353159994265
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   0.6s
+Total time: 0.7581365599999117
 Rain outliers removed
               precision    recall  f1-score   support
 
@@ -15415,8 +15416,8 @@ Balanced accuracy of the model is: 73.54623289506358 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.1s
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   1.3s
-Total time: 1.4526680769995437
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   0.7s
+Total time: 0.7685166970004502
 Rain with outliers
               precision    recall  f1-score   support
 
@@ -15469,22 +15470,22 @@ Balanced accuracy of the model is: 74.07514219767569 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.0s
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   0.7s
-Total time: 0.7387179769993963
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   0.3s
+Total time: 0.36958353800037
 original data
               precision    recall  f1-score   support
 
-           0       0.89      0.95      0.92      8799
-           1       0.76      0.57      0.65      2485
+           0       0.89      0.95      0.92      8793
+           1       0.76      0.57      0.65      2491
 
     accuracy                           0.86     11284
    macro avg       0.82      0.76      0.78     11284
 weighted avg       0.86      0.86      0.86     11284
 
-Accuracy of the model is: 86.46756469337114 %
-Balanced accuracy of the model is: 75.91725372121351 %
-[[8339  460]
- [1067 1418]]
+Accuracy of the model is: 86.41439205955335 %
+Balanced accuracy of the model is: 75.81797598843612 %
+[[8335  458]
+ [1075 1416]]
 </pre>
 </div>
 </div>
@@ -15529,9 +15530,9 @@ Balanced accuracy of the model is: 75.91725372121351 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.1s
-[01:13:56] WARNING: ../src/learner.cc:1095: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   5.5s
-Total time: 5.601229064999643
+[02:25:20] WARNING: ../src/learner.cc:1095: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   3.9s
+Total time: 3.991296522999619
 Rain outliers removed
               precision    recall  f1-score   support
 
@@ -15584,9 +15585,9 @@ Balanced accuracy of the model is: 74.03520474162258 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.1s
-[01:14:02] WARNING: ../src/learner.cc:1095: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   5.1s
-Total time: 5.234874079000292
+[02:25:24] WARNING: ../src/learner.cc:1095: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   4.0s
+Total time: 4.086445136999828
 Rain with outliers
               precision    recall  f1-score   support
 
@@ -15639,23 +15640,23 @@ Balanced accuracy of the model is: 74.67889278227227 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.0s
-[01:14:07] WARNING: ../src/learner.cc:1095: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   1.8s
-Total time: 1.7750013130007574
+[02:25:28] WARNING: ../src/learner.cc:1095: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   1.1s
+Total time: 1.0986063290001766
 original data
               precision    recall  f1-score   support
 
-           0       0.89      0.94      0.91      8799
-           1       0.74      0.58      0.65      2485
+           0       0.89      0.94      0.91      8793
+           1       0.74      0.57      0.65      2491
 
     accuracy                           0.86     11284
    macro avg       0.81      0.76      0.78     11284
 weighted avg       0.85      0.86      0.86     11284
 
 Accuracy of the model is: 86.19283941864587 %
-Balanced accuracy of the model is: 75.94323298582265 %
-[[8294  505]
- [1053 1432]]
+Balanced accuracy of the model is: 75.90599215289451 %
+[[8294  499]
+ [1059 1432]]
 </pre>
 </div>
 </div>
@@ -15700,22 +15701,22 @@ Balanced accuracy of the model is: 75.94323298582265 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.1s
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=  18.8s
-Total time: 19.4364083950004
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=  17.2s
+Total time: 17.85263612000017
 Rain outliers removed
               precision    recall  f1-score   support
 
            0       0.87      0.96      0.91     19284
-           1       0.76      0.48      0.59      5458
+           1       0.76      0.49      0.60      5458
 
     accuracy                           0.85     24742
    macro avg       0.81      0.72      0.75     24742
 weighted avg       0.84      0.85      0.84     24742
 
-Accuracy of the model is: 85.21946487753618 %
-Balanced accuracy of the model is: 72.0487127322301 %
-[[18439   845]
- [ 2812  2646]]
+Accuracy of the model is: 85.32859105973648 %
+Balanced accuracy of the model is: 72.26978391456275 %
+[[18443   841]
+ [ 2789  2669]]
 </pre>
 </div>
 </div>
@@ -15754,22 +15755,22 @@ Balanced accuracy of the model is: 72.0487127322301 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.1s
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=  19.0s
-Total time: 19.62760419300139
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=  17.2s
+Total time: 17.76227094999922
 Rain with outliers
               precision    recall  f1-score   support
 
            0       0.87      0.96      0.91     19284
-           1       0.76      0.49      0.60      5458
+           1       0.76      0.50      0.60      5458
 
     accuracy                           0.85     24742
    macro avg       0.82      0.73      0.76     24742
 weighted avg       0.85      0.85      0.84     24742
 
-Accuracy of the model is: 85.44580066284051 %
-Balanced accuracy of the model is: 72.50260878474677 %
-[[18448   836]
- [ 2765  2693]]
+Accuracy of the model is: 85.49834289871474 %
+Balanced accuracy of the model is: 72.7070845693185 %
+[[18435   849]
+ [ 2739  2719]]
 </pre>
 </div>
 </div>
@@ -15808,22 +15809,22 @@ Balanced accuracy of the model is: 72.50260878474677 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.0s
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   8.7s
-Total time: 8.879333287999543
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   7.9s
+Total time: 8.144166994999978
 original data
               precision    recall  f1-score   support
 
-           0       0.88      0.96      0.92      8799
-           1       0.77      0.53      0.63      2485
+           0       0.88      0.96      0.91      8793
+           1       0.77      0.53      0.63      2491
 
     accuracy                           0.86     11284
    macro avg       0.83      0.74      0.77     11284
-weighted avg       0.86      0.86      0.85     11284
+weighted avg       0.85      0.86      0.85     11284
 
-Accuracy of the model is: 86.22828784119106 %
-Balanced accuracy of the model is: 74.33443941292946 %
-[[8411  388]
- [1166 1319]]
+Accuracy of the model is: 86.13966678482808 %
+Balanced accuracy of the model is: 74.11679201956338 %
+[[8410  383]
+ [1181 1310]]
 </pre>
 </div>
 </div>
@@ -15873,8 +15874,8 @@ Balanced accuracy of the model is: 74.33443941292946 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.1s
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   1.3s
-Total time: 1.4086803669997607
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   0.8s
+Total time: 0.8909794690007402
 Rain outliers removed
               precision    recall  f1-score   support
 
@@ -15927,8 +15928,8 @@ Balanced accuracy of the model is: 79.56544171405956 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.1s
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   1.0s
-Total time: 1.107196474000375
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   0.6s
+Total time: 0.7623002319996885
 Rain with outliers
               precision    recall  f1-score   support
 
@@ -15981,22 +15982,22 @@ Balanced accuracy of the model is: 80.17906098798701 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.0s
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   0.6s
-Total time: 0.6124932120001176
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   0.3s
+Total time: 0.37492626200037193
 original data
               precision    recall  f1-score   support
 
-           0       0.94      0.82      0.88      8799
-           1       0.56      0.80      0.66      2485
+           0       0.94      0.82      0.88      8793
+           1       0.57      0.81      0.67      2491
 
     accuracy                           0.82     11284
-   macro avg       0.75      0.81      0.77     11284
-weighted avg       0.85      0.82      0.83     11284
+   macro avg       0.75      0.82      0.77     11284
+weighted avg       0.86      0.82      0.83     11284
 
-Accuracy of the model is: 81.96561503013116 %
-Balanced accuracy of the model is: 81.43362962180402 %
-[[7249 1550]
- [ 485 2000]]
+Accuracy of the model is: 82.05423608649414 %
+Balanced accuracy of the model is: 81.66623317159105 %
+[[7242 1551]
+ [ 474 2017]]
 </pre>
 </div>
 </div>
@@ -16041,9 +16042,9 @@ Balanced accuracy of the model is: 81.43362962180402 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.1s
-[01:15:01] WARNING: ../src/learner.cc:1095: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   4.7s
-Total time: 4.78361179499916
+[02:26:16] WARNING: ../src/learner.cc:1095: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   3.7s
+Total time: 3.821975509999902
 Rain outliers removed
               precision    recall  f1-score   support
 
@@ -16096,9 +16097,9 @@ Balanced accuracy of the model is: 79.359795406213 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.1s
-[01:15:06] WARNING: ../src/learner.cc:1095: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   4.7s
-Total time: 4.820741911000368
+[02:26:20] WARNING: ../src/learner.cc:1095: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   3.4s
+Total time: 3.548556625000856
 Rain with outliers
               precision    recall  f1-score   support
 
@@ -16151,23 +16152,23 @@ Balanced accuracy of the model is: 79.73695187682385 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.0s
-[01:15:11] WARNING: ../src/learner.cc:1095: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   1.5s
-Total time: 1.486854189000951
+[02:26:24] WARNING: ../src/learner.cc:1095: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   0.9s
+Total time: 0.911173652000798
 original data
               precision    recall  f1-score   support
 
-           0       0.92      0.85      0.88      8799
-           1       0.58      0.75      0.66      2485
+           0       0.93      0.85      0.89      8793
+           1       0.59      0.77      0.67      2491
 
     accuracy                           0.83     11284
-   macro avg       0.75      0.80      0.77     11284
+   macro avg       0.76      0.81      0.78     11284
 weighted avg       0.85      0.83      0.84     11284
 
-Accuracy of the model is: 82.79865295994328 %
-Balanced accuracy of the model is: 80.17743693665574 %
-[[7467 1332]
- [ 609 1876]]
+Accuracy of the model is: 83.18858560794044 %
+Balanced accuracy of the model is: 80.82601973039483 %
+[[7479 1314]
+ [ 583 1908]]
 </pre>
 </div>
 </div>
@@ -16212,22 +16213,22 @@ Balanced accuracy of the model is: 80.17743693665574 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.1s
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=  17.9s
-Total time: 18.569429691999176
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=  15.9s
+Total time: 16.537422116000016
 Rain outliers removed
               precision    recall  f1-score   support
 
-           0       0.87      0.96      0.91     19284
-           1       0.77      0.47      0.58      5458
+           0       0.86      0.96      0.91     19284
+           1       0.76      0.47      0.58      5458
 
     accuracy                           0.85     24742
-   macro avg       0.82      0.72      0.75     24742
+   macro avg       0.81      0.71      0.74     24742
 weighted avg       0.84      0.85      0.84     24742
 
-Accuracy of the model is: 85.16288093121008 %
-Balanced accuracy of the model is: 71.52637812203831 %
-[[18499   785]
- [ 2886  2572]]
+Accuracy of the model is: 85.03354619675046 %
+Balanced accuracy of the model is: 71.37772736673536 %
+[[18477   807]
+ [ 2896  2562]]
 </pre>
 </div>
 </div>
@@ -16266,22 +16267,22 @@ Balanced accuracy of the model is: 71.52637812203831 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.1s
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=  17.4s
-Total time: 18.044557770999745
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=  16.1s
+Total time: 16.661805219999223
 Rain with outliers
               precision    recall  f1-score   support
 
            0       0.87      0.96      0.91     19284
-           1       0.76      0.48      0.59      5458
+           1       0.77      0.48      0.59      5458
 
     accuracy                           0.85     24742
    macro avg       0.82      0.72      0.75     24742
 weighted avg       0.84      0.85      0.84     24742
 
-Accuracy of the model is: 85.32454934928462 %
-Balanced accuracy of the model is: 72.11612613193972 %
-[[18465   819]
- [ 2812  2646]]
+Accuracy of the model is: 85.25179856115108 %
+Balanced accuracy of the model is: 71.83300581484039 %
+[[18483   801]
+ [ 2848  2610]]
 </pre>
 </div>
 </div>
@@ -16320,22 +16321,22 @@ Balanced accuracy of the model is: 72.11612613193972 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.0s
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   8.5s
-Total time: 8.693430713999987
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   7.5s
+Total time: 7.737518910998915
 original data
               precision    recall  f1-score   support
 
-           0       0.87      0.96      0.92      8799
-           1       0.79      0.50      0.62      2485
+           0       0.87      0.96      0.92      8793
+           1       0.79      0.51      0.62      2491
 
     accuracy                           0.86     11284
-   macro avg       0.83      0.73      0.77     11284
-weighted avg       0.86      0.86      0.85     11284
+   macro avg       0.83      0.74      0.77     11284
+weighted avg       0.85      0.86      0.85     11284
 
-Accuracy of the model is: 86.19283941864587 %
-Balanced accuracy of the model is: 73.3154695876132 %
-[[8476  323]
- [1235 1250]]
+Accuracy of the model is: 86.13080467919177 %
+Balanced accuracy of the model is: 73.52128301028476 %
+[[8450  343]
+ [1222 1269]]
 </pre>
 </div>
 </div>
@@ -16402,22 +16403,22 @@ Balanced accuracy of the model is: 73.3154695876132 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.1s
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   2.7s
-Total time: 2.925089415999537
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   1.6s
+Total time: 1.7330779549993167
 Rain outliers removed
               precision    recall  f1-score   support
 
            0       0.88      0.94      0.91     19284
-           1       0.72      0.53      0.61      5458
+           1       0.73      0.53      0.61      5458
 
     accuracy                           0.85     24742
-   macro avg       0.80      0.73      0.76     24742
+   macro avg       0.80      0.74      0.76     24742
 weighted avg       0.84      0.85      0.84     24742
 
-Accuracy of the model is: 85.106296984884 %
-Balanced accuracy of the model is: 73.49989936540156 %
-[[18179  1105]
- [ 2580  2878]]
+Accuracy of the model is: 85.21946487753618 %
+Balanced accuracy of the model is: 73.68415512048068 %
+[[18190  1094]
+ [ 2563  2895]]
 </pre>
 </div>
 </div>
@@ -16456,22 +16457,22 @@ Balanced accuracy of the model is: 73.49989936540156 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.1s
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   2.3s
-Total time: 2.4884596729989426
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   1.5s
+Total time: 1.6542812419993425
 Rain with outliers
               precision    recall  f1-score   support
 
            0       0.88      0.94      0.91     19284
-           1       0.73      0.54      0.62      5458
+           1       0.73      0.55      0.62      5458
 
-    accuracy                           0.85     24742
-   macro avg       0.80      0.74      0.77     24742
-weighted avg       0.85      0.85      0.85     24742
+    accuracy                           0.86     24742
+   macro avg       0.81      0.74      0.77     24742
+weighted avg       0.85      0.86      0.85     24742
 
-Accuracy of the model is: 85.44984237329237 %
-Balanced accuracy of the model is: 74.32454916421977 %
-[[18172  1112]
- [ 2488  2970]]
+Accuracy of the model is: 85.54280171368524 %
+Balanced accuracy of the model is: 74.44329647021107 %
+[[18186  1098]
+ [ 2479  2979]]
 </pre>
 </div>
 </div>
@@ -16510,22 +16511,22 @@ Balanced accuracy of the model is: 74.32454916421977 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.0s
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   0.7s
-Total time: 0.7647496239987959
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   0.4s
+Total time: 0.467367954999645
 original data
               precision    recall  f1-score   support
 
-           0       0.89      0.93      0.91      8799
-           1       0.72      0.60      0.65      2485
+           0       0.89      0.94      0.91      8793
+           1       0.73      0.60      0.66      2491
 
     accuracy                           0.86     11284
-   macro avg       0.80      0.77      0.78     11284
-weighted avg       0.85      0.86      0.86     11284
+   macro avg       0.81      0.77      0.79     11284
+weighted avg       0.86      0.86      0.86     11284
 
-Accuracy of the model is: 85.99787309464729 %
-Balanced accuracy of the model is: 76.71339092630565 %
-[[8210  589]
- [ 991 1494]]
+Accuracy of the model is: 86.17511520737328 %
+Balanced accuracy of the model is: 76.75777459379182 %
+[[8232  561]
+ [ 999 1492]]
 </pre>
 </div>
 </div>
@@ -16570,9 +16571,9 @@ Balanced accuracy of the model is: 76.71339092630565 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.1s
-[01:16:26] WARNING: ../src/learner.cc:1095: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   9.4s
-Total time: 9.588143314998888
+[02:27:31] WARNING: ../src/learner.cc:1095: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   7.6s
+Total time: 7.770929865000653
 Rain outliers removed
               precision    recall  f1-score   support
 
@@ -16581,12 +16582,12 @@ Rain outliers removed
 
     accuracy                           0.85     24742
    macro avg       0.80      0.74      0.76     24742
-weighted avg       0.84      0.85      0.84     24742
+weighted avg       0.84      0.85      0.85     24742
 
-Accuracy of the model is: 85.29221566566972 %
-Balanced accuracy of the model is: 74.05265997993844 %
-[[18159  1125]
- [ 2514  2944]]
+Accuracy of the model is: 85.33263277018834 %
+Balanced accuracy of the model is: 74.19024491983397 %
+[[18152  1132]
+ [ 2497  2961]]
 </pre>
 </div>
 </div>
@@ -16625,9 +16626,9 @@ Balanced accuracy of the model is: 74.05265997993844 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.1s
-[01:16:36] WARNING: ../src/learner.cc:1095: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   9.2s
-Total time: 9.317766563999612
+[02:27:39] WARNING: ../src/learner.cc:1095: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   8.1s
+Total time: 8.275296193000031
 Rain with outliers
               precision    recall  f1-score   support
 
@@ -16638,10 +16639,10 @@ Rain with outliers
    macro avg       0.81      0.75      0.77     24742
 weighted avg       0.85      0.86      0.85     24742
 
-Accuracy of the model is: 85.67213644814485 %
-Balanced accuracy of the model is: 74.7692843519508 %
-[[18181  1103]
- [ 2442  3016]]
+Accuracy of the model is: 85.668094737693 %
+Balanced accuracy of the model is: 74.81923586264412 %
+[[18172  1112]
+ [ 2434  3024]]
 </pre>
 </div>
 </div>
@@ -16680,23 +16681,23 @@ Balanced accuracy of the model is: 74.7692843519508 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.0s
-[01:16:45] WARNING: ../src/learner.cc:1095: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   3.7s
-Total time: 3.690717470999516
+[02:27:47] WARNING: ../src/learner.cc:1095: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   2.6s
+Total time: 2.6454684479995194
 original data
               precision    recall  f1-score   support
 
-           0       0.89      0.93      0.91      8799
-           1       0.72      0.60      0.65      2485
+           0       0.89      0.94      0.91      8793
+           1       0.73      0.59      0.65      2491
 
     accuracy                           0.86     11284
    macro avg       0.81      0.77      0.78     11284
 weighted avg       0.85      0.86      0.86     11284
 
-Accuracy of the model is: 85.99787309464729 %
-Balanced accuracy of the model is: 76.51125528028953 %
-[[8224  575]
- [1005 1480]]
+Accuracy of the model is: 86.13080467919177 %
+Balanced accuracy of the model is: 76.57109778073806 %
+[[8238  555]
+ [1010 1481]]
 </pre>
 </div>
 </div>
@@ -16741,8 +16742,8 @@ Balanced accuracy of the model is: 76.51125528028953 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.1s
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=  40.7s
-Total time: 41.40581818199826
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=  37.0s
+Total time: 37.714844272000846
 Rain outliers removed
               precision    recall  f1-score   support
 
@@ -16753,10 +16754,10 @@ Rain outliers removed
    macro avg       0.80      0.74      0.76     24742
 weighted avg       0.84      0.85      0.84     24742
 
-Accuracy of the model is: 85.21946487753618 %
-Balanced accuracy of the model is: 74.3540953759086 %
-[[18088  1196]
- [ 2461  2997]]
+Accuracy of the model is: 85.13054724759517 %
+Balanced accuracy of the model is: 74.20510068438368 %
+[[18080  1204]
+ [ 2475  2983]]
 </pre>
 </div>
 </div>
@@ -16795,22 +16796,22 @@ Balanced accuracy of the model is: 74.3540953759086 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.1s
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=  42.5s
-Total time: 43.21130057600021
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=  38.6s
+Total time: 39.30132561800019
 Rain with outliers
               precision    recall  f1-score   support
 
            0       0.88      0.94      0.91     19284
            1       0.72      0.56      0.63      5458
 
-    accuracy                           0.86     24742
+    accuracy                           0.85     24742
    macro avg       0.80      0.75      0.77     24742
-weighted avg       0.85      0.86      0.85     24742
+weighted avg       0.85      0.85      0.85     24742
 
-Accuracy of the model is: 85.52663487187779 %
-Balanced accuracy of the model is: 74.96493655725847 %
-[[18101  1183]
- [ 2398  3060]]
+Accuracy of the model is: 85.47813434645542 %
+Balanced accuracy of the model is: 74.92068659702966 %
+[[18091  1193]
+ [ 2400  3058]]
 </pre>
 </div>
 </div>
@@ -16849,22 +16850,22 @@ Balanced accuracy of the model is: 74.96493655725847 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.0s
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=  19.0s
-Total time: 19.2767759390008
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=  17.4s
+Total time: 17.638599116999103
 original data
               precision    recall  f1-score   support
 
-           0       0.90      0.91      0.91      8799
-           1       0.68      0.65      0.67      2485
+           0       0.90      0.91      0.91      8793
+           1       0.68      0.66      0.67      2491
 
     accuracy                           0.86     11284
    macro avg       0.79      0.78      0.79     11284
-weighted avg       0.85      0.86      0.85     11284
+weighted avg       0.85      0.86      0.86     11284
 
-Accuracy of the model is: 85.60794044665012 %
-Balanced accuracy of the model is: 78.28258332813107 %
-[[8040  759]
- [ 865 1620]]
+Accuracy of the model is: 85.62566465792271 %
+Balanced accuracy of the model is: 78.43363596722568 %
+[[8029  764]
+ [ 858 1633]]
 </pre>
 </div>
 </div>
@@ -16931,8 +16932,8 @@ Balanced accuracy of the model is: 78.28258332813107 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.0s
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   0.5s
-Total time: 0.6027064249992691
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   0.4s
+Total time: 0.5006803970009059
 Rain outliers removed
               precision    recall  f1-score   support
 
@@ -16985,8 +16986,8 @@ Balanced accuracy of the model is: 79.30060987302939 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.0s
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   0.7s
-Total time: 0.7421379190000152
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   0.4s
+Total time: 0.45632513700002164
 Rain with outliers
               precision    recall  f1-score   support
 
@@ -17040,21 +17041,21 @@ Balanced accuracy of the model is: 79.88173952527984 %
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.0s
 [Pipeline] ........ (step 2 of 2) Processing classifier, total=   0.2s
-Total time: 0.19439402100033476
+Total time: 0.22802988399962487
 original data
               precision    recall  f1-score   support
 
-           0       0.94      0.82      0.87      8799
-           1       0.56      0.81      0.66      2485
+           0       0.94      0.81      0.87      8793
+           1       0.55      0.83      0.66      2491
 
-    accuracy                           0.82     11284
-   macro avg       0.75      0.82      0.77     11284
-weighted avg       0.86      0.82      0.83     11284
+    accuracy                           0.81     11284
+   macro avg       0.74      0.82      0.76     11284
+weighted avg       0.86      0.81      0.82     11284
 
-Accuracy of the model is: 81.5579581708614 %
-Balanced accuracy of the model is: 81.51875453196507 %
-[[7179 1620]
- [ 461 2024]]
+Accuracy of the model is: 81.07054236086493 %
+Balanced accuracy of the model is: 81.61048602445204 %
+[[7091 1702]
+ [ 434 2057]]
 </pre>
 </div>
 </div>
@@ -17099,9 +17100,9 @@ Balanced accuracy of the model is: 81.51875453196507 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.0s
-[01:18:35] WARNING: ../src/learner.cc:1095: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   2.0s
-Total time: 2.066651199000262
+[02:29:26] WARNING: ../src/learner.cc:1095: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   1.6s
+Total time: 1.6796609889988758
 Rain outliers removed
               precision    recall  f1-score   support
 
@@ -17154,9 +17155,9 @@ Balanced accuracy of the model is: 79.45548473383023 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.0s
-[01:18:37] WARNING: ../src/learner.cc:1095: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   2.0s
-Total time: 2.0716838629996346
+[02:29:28] WARNING: ../src/learner.cc:1095: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   1.7s
+Total time: 1.7715486109991616
 Rain with outliers
               precision    recall  f1-score   support
 
@@ -17209,23 +17210,23 @@ Balanced accuracy of the model is: 79.76073668174438 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.0s
-[01:18:39] WARNING: ../src/learner.cc:1095: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
+[02:29:30] WARNING: ../src/learner.cc:1095: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
 [Pipeline] ........ (step 2 of 2) Processing classifier, total=   0.5s
-Total time: 0.5265548740007944
+Total time: 0.5177567480004654
 original data
               precision    recall  f1-score   support
 
-           0       0.94      0.82      0.87      8799
-           1       0.55      0.81      0.66      2485
+           0       0.94      0.81      0.87      8793
+           1       0.54      0.81      0.65      2491
 
     accuracy                           0.81     11284
    macro avg       0.74      0.81      0.76     11284
 weighted avg       0.85      0.81      0.82     11284
 
-Accuracy of the model is: 81.33640552995391 %
-Balanced accuracy of the model is: 81.05905120460231 %
-[[7176 1623]
- [ 483 2002]]
+Accuracy of the model is: 80.80467919177596 %
+Balanced accuracy of the model is: 80.9795463829002 %
+[[7093 1700]
+ [ 466 2025]]
 </pre>
 </div>
 </div>
@@ -17270,22 +17271,22 @@ Balanced accuracy of the model is: 81.05905120460231 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.0s
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   7.2s
-Total time: 7.75223563200052
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   6.6s
+Total time: 7.097285071000442
 Rain outliers removed
               precision    recall  f1-score   support
 
-           0       0.93      0.79      0.86     19284
-           1       0.52      0.79      0.63      5458
+           0       0.93      0.79      0.85     19284
+           1       0.52      0.78      0.62      5458
 
     accuracy                           0.79     24742
-   macro avg       0.73      0.79      0.74     24742
-weighted avg       0.84      0.79      0.81     24742
+   macro avg       0.72      0.79      0.74     24742
+weighted avg       0.84      0.79      0.80     24742
 
-Accuracy of the model is: 79.23369169832674 %
-Balanced accuracy of the model is: 79.21677969437029 %
-[[15282  4002]
- [ 1136  4322]]
+Accuracy of the model is: 79.02352275482984 %
+Balanced accuracy of the model is: 78.80609514271605 %
+[[15272  4012]
+ [ 1178  4280]]
 </pre>
 </div>
 </div>
@@ -17324,22 +17325,22 @@ Balanced accuracy of the model is: 79.21677969437029 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.0s
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   7.1s
-Total time: 7.659039518001009
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   6.6s
+Total time: 7.141857091000929
 Rain with outliers
               precision    recall  f1-score   support
 
            0       0.93      0.80      0.86     19284
-           1       0.53      0.80      0.63      5458
+           1       0.53      0.79      0.63      5458
 
     accuracy                           0.80     24742
    macro avg       0.73      0.80      0.75     24742
 weighted avg       0.84      0.80      0.81     24742
 
-Accuracy of the model is: 79.698488400291 %
-Balanced accuracy of the model is: 79.63317909788987 %
-[[15379  3905]
- [ 1118  4340]]
+Accuracy of the model is: 79.8641985288174 %
+Balanced accuracy of the model is: 79.68037246810685 %
+[[15429  3855]
+ [ 1127  4331]]
 </pre>
 </div>
 </div>
@@ -17378,22 +17379,22 @@ Balanced accuracy of the model is: 79.63317909788987 %
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[Pipeline] ............ (step 1 of 2) Processing scaler, total=   0.0s
-[Pipeline] ........ (step 2 of 2) Processing classifier, total=   3.6s
-Total time: 3.842551932999413
+[Pipeline] ........ (step 2 of 2) Processing classifier, total=   3.3s
+Total time: 3.4563412530005735
 original data
               precision    recall  f1-score   support
 
-           0       0.94      0.81      0.87      8799
-           1       0.55      0.81      0.65      2485
+           0       0.94      0.80      0.87      8793
+           1       0.54      0.82      0.65      2491
 
     accuracy                           0.81     11284
    macro avg       0.74      0.81      0.76     11284
 weighted avg       0.85      0.81      0.82     11284
 
-Accuracy of the model is: 81.11485288904645 %
-Balanced accuracy of the model is: 81.00361916927179 %
-[[7145 1654]
- [ 477 2008]]
+Accuracy of the model is: 80.68060971286778 %
+Balanced accuracy of the model is: 81.10134046538882 %
+[[7065 1728]
+ [ 452 2039]]
 </pre>
 </div>
 </div>
@@ -17426,7 +17427,7 @@ Balanced accuracy of the model is: 81.00361916927179 %
             <span class="s1">&#39;balanced&#39;</span><span class="p">:{</span><span class="s1">&#39;simple&#39;</span><span class="p">:{},</span> <span class="s1">&#39;oversampling&#39;</span><span class="p">:{},</span> <span class="s1">&#39;undersampling&#39;</span><span class="p">:{},</span> <span class="s1">&#39;weights&#39;</span><span class="p">:{}}}</span>
 <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
   <span class="n">t1</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-  <span class="n">t2</span><span class="o">=</span><span class="n">results</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+  <span class="n">t2</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
   <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;LGBM&#39;</span><span class="p">)</span><span class="o">!=-</span><span class="mi">1</span><span class="p">:</span>
     <span class="n">n</span><span class="o">=</span><span class="s1">&#39;lgbm&#39;</span>
   <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;XGB&#39;</span><span class="p">)</span><span class="o">!=-</span><span class="mi">1</span><span class="p">:</span>
@@ -17543,50 +17544,50 @@ Balanced accuracy of the model is: 81.00361916927179 %
       <th>simple</th>
       <td>85.583219</td>
       <td>85.797429</td>
-      <td>85.445801</td>
+      <td>85.498343</td>
     </tr>
     <tr>
       <th>oversampling</th>
-      <td>85.449842</td>
-      <td>85.672136</td>
-      <td>85.526635</td>
+      <td>85.542802</td>
+      <td>85.668095</td>
+      <td>85.478134</td>
     </tr>
     <tr>
       <th>undersampling</th>
       <td>79.973325</td>
       <td>79.682322</td>
-      <td>79.698488</td>
+      <td>79.864199</td>
     </tr>
     <tr>
       <th>weights</th>
       <td>80.692749</td>
       <td>81.242422</td>
-      <td>85.324549</td>
+      <td>85.251799</td>
     </tr>
     <tr>
       <th rowspan="4" valign="top">balanced</th>
       <th>simple</th>
       <td>74.075142</td>
       <td>74.678893</td>
-      <td>72.502609</td>
+      <td>72.707085</td>
     </tr>
     <tr>
       <th>oversampling</th>
-      <td>74.324549</td>
-      <td>74.769284</td>
-      <td>74.964937</td>
+      <td>74.443296</td>
+      <td>74.819236</td>
+      <td>74.920687</td>
     </tr>
     <tr>
       <th>undersampling</th>
       <td>79.881740</td>
       <td>79.760737</td>
-      <td>79.633179</td>
+      <td>79.680372</td>
     </tr>
     <tr>
       <th>weights</th>
       <td>80.179061</td>
       <td>79.736952</td>
-      <td>72.116126</td>
+      <td>71.833006</td>
     </tr>
   </tbody>
 </table>
@@ -17662,50 +17663,50 @@ Balanced accuracy of the model is: 81.00361916927179 %
       <th>simple</th>
       <td>85.373050</td>
       <td>85.336674</td>
-      <td>85.219465</td>
+      <td>85.328591</td>
     </tr>
     <tr>
       <th>oversampling</th>
-      <td>85.106297</td>
-      <td>85.292216</td>
       <td>85.219465</td>
+      <td>85.332633</td>
+      <td>85.130547</td>
     </tr>
     <tr>
       <th>undersampling</th>
       <td>79.261984</td>
       <td>79.431736</td>
-      <td>79.233692</td>
+      <td>79.023523</td>
     </tr>
     <tr>
       <th>weights</th>
       <td>80.094576</td>
       <td>80.951419</td>
-      <td>85.162881</td>
+      <td>85.033546</td>
     </tr>
     <tr>
       <th rowspan="4" valign="top">balanced</th>
       <th>simple</th>
       <td>73.546233</td>
       <td>74.035205</td>
-      <td>72.048713</td>
+      <td>72.269784</td>
     </tr>
     <tr>
       <th>oversampling</th>
-      <td>73.499899</td>
-      <td>74.052660</td>
-      <td>74.354095</td>
+      <td>73.684155</td>
+      <td>74.190245</td>
+      <td>74.205101</td>
     </tr>
     <tr>
       <th>undersampling</th>
       <td>79.300610</td>
       <td>79.455485</td>
-      <td>79.216780</td>
+      <td>78.806095</td>
     </tr>
     <tr>
       <th>weights</th>
       <td>79.565442</td>
       <td>79.359795</td>
-      <td>71.526378</td>
+      <td>71.377727</td>
     </tr>
   </tbody>
 </table>
@@ -17779,52 +17780,52 @@ Balanced accuracy of the model is: 81.00361916927179 %
     <tr>
       <th rowspan="4" valign="top">acc</th>
       <th>simple</th>
-      <td>86.467565</td>
+      <td>86.414392</td>
       <td>86.192839</td>
-      <td>86.228288</td>
+      <td>86.139667</td>
     </tr>
     <tr>
       <th>oversampling</th>
-      <td>85.997873</td>
-      <td>85.997873</td>
-      <td>85.607940</td>
+      <td>86.175115</td>
+      <td>86.130805</td>
+      <td>85.625665</td>
     </tr>
     <tr>
       <th>undersampling</th>
-      <td>81.557958</td>
-      <td>81.336406</td>
-      <td>81.114853</td>
+      <td>81.070542</td>
+      <td>80.804679</td>
+      <td>80.680610</td>
     </tr>
     <tr>
       <th>weights</th>
-      <td>81.965615</td>
-      <td>82.798653</td>
-      <td>86.192839</td>
+      <td>82.054236</td>
+      <td>83.188586</td>
+      <td>86.130805</td>
     </tr>
     <tr>
       <th rowspan="4" valign="top">balanced</th>
       <th>simple</th>
-      <td>75.917254</td>
-      <td>75.943233</td>
-      <td>74.334439</td>
+      <td>75.817976</td>
+      <td>75.905992</td>
+      <td>74.116792</td>
     </tr>
     <tr>
       <th>oversampling</th>
-      <td>76.713391</td>
-      <td>76.511255</td>
-      <td>78.282583</td>
+      <td>76.757775</td>
+      <td>76.571098</td>
+      <td>78.433636</td>
     </tr>
     <tr>
       <th>undersampling</th>
-      <td>81.518755</td>
-      <td>81.059051</td>
-      <td>81.003619</td>
+      <td>81.610486</td>
+      <td>80.979546</td>
+      <td>81.101340</td>
     </tr>
     <tr>
       <th>weights</th>
-      <td>81.433630</td>
-      <td>80.177437</td>
-      <td>73.315470</td>
+      <td>81.666233</td>
+      <td>80.826020</td>
+      <td>73.521283</td>
     </tr>
   </tbody>
 </table>
